@@ -1,0 +1,26 @@
+{
+    "dPoint":{
+        "shownText": "Good Morning, everyone!", 
+        "options":{
+            "A":{
+                "response":"Back to you!"
+            },
+            "B":{
+                "response":"Dont talk to me!",
+                "events": {
+                    "dPoint":{
+                            "shownText": "Why so rude ?", 
+                            "options":{
+                                "A":{
+                                    "response" : "I dont know."
+                                },
+                                "B":{
+                                    "response":"Shut up..."
+                                }
+                            }
+                    }
+                }
+            }
+        }
+    }
+}
