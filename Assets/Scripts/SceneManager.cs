@@ -25,6 +25,14 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            dialogBox.gameObject.SetActive(!dialogBox.gameObject.activeSelf);
+        }
+    }
+
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -35,7 +43,8 @@ public class SceneManager : MonoBehaviour
     [SerializeField] private Text npcText;
 
     [SerializeField] private Text playerAnswerText;
-    
+
+    [SerializeField] private GameObject dialogBox;
     string jsonPath = "Assets/DayFiles/Day_Test.json.txt";
     
     public LinkedList<Event> dayEvents = new LinkedList<Event>();
