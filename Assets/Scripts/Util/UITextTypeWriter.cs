@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using Util;
 
 // attach to UI Text component (with the full text already there)
 
@@ -25,6 +26,7 @@ public class UITextTypeWriter : MonoBehaviour
         foreach (char c in textToDisplay) 
         {
             displayText.text += c;
+            SoundManager.Instance.playsoundEffect(SoundManager.SoundClip.TextReadout);
             yield return new WaitForSeconds (interval);
         }
     }

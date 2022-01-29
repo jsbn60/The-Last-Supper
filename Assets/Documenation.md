@@ -5,6 +5,7 @@
 - dPoint (DialoguePoint)
 ````
     "1":{
+        "character": "Which character
         "shownText": "Good Morning, everyone!", 
         "options":{
             "A": {
@@ -21,4 +22,22 @@
             }
         }
     },
+````
+- npcPoint (NPC says something)
+````
+    "2":{
+        "character":"NameOfCharacter",
+        "shownText":"textOfNpc"
+        "followEvents":{}
+    }
+````
+
+- soundeffect
+````
+    "3":{
+        "name":"name",
+        "volume":"volume",
+        "fadeInTime":"fadeInTime",
+        "fadeOutTime:"fadeOutTime"
+    }
 ````

@@ -55,14 +55,16 @@
      <Compile Include="Assets\Scripts\SimpleJSON\SimpleJSONDotNetTypes.cs" />
      <Compile Include="Assets\Scripts\Events\DialogueOptions.cs" />
      <Compile Include="Assets\Scripts\SceneManager.cs" />
+     <Compile Include="Assets\Scripts\Util\Pair.cs" />
      <Compile Include="Assets\Scripts\DialogeButton.cs" />
      <Compile Include="Assets\Scripts\Events\DialoguePoint.cs" />
      <Compile Include="Assets\Scripts\SimpleJSON\SimpleJSON.cs" />
      <Compile Include="Assets\Scripts\Events\Event.cs" />
      <Compile Include="Assets\Scripts\SimpleJSON\SimpleJSONUnity.cs" />
-     <Compile Include="Assets\Scripts\SimpleJSON\SimpleJSONBinary.cs" />
-     <Compile Include="Assets\Scripts\Util\Pair.cs" />
      <Compile Include="Assets\Scripts\Util\UITextTypeWriter.cs" />
+     <Compile Include="Assets\Scripts\SimpleJSON\SimpleJSONBinary.cs" />
+     <Compile Include="Assets\Scripts\Util\SoundManager.cs" />
+     <Compile Include="Assets\Scripts\Events\NPCPoint.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.26f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

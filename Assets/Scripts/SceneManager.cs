@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Events;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ public class SceneManager : MonoBehaviour
     private static SceneManager _instance;
 
     private LinkedList<Event> dPoints = new LinkedList<Event>();
+    private LinkedList<Event> npcPoints = new LinkedList<Event>();
     public static SceneManager Instance
     {
         get
@@ -46,16 +48,15 @@ public class SceneManager : MonoBehaviour
     [SerializeField] private Text playerAnswerText;
 
     [SerializeField] private GameObject dialogBox;
-    string jsonPath = "Assets/DayFiles/DayTest/dPoints.json";
 
-    public LinkedList<Event> eventQueue = new LinkedList<Event>();
-    void Start()
+    [SerializeField] private Button nextButton;
+    private string jsonPath = "Assets/DayFiles/DayTest/";
+
+    public void loadDayFiles()
     {
-        string jsonString = File.ReadAllText(jsonPath);
-
+        // Read dPoint
+        string jsonString = File.ReadAllText(jsonPath+"dPoints.json");
         JSONNode jsonNode = JSONNode.Parse(jsonString);
-        
-        
         // Read Files
         if (jsonNode.Tag == JSONNodeType.Object)
         {
@@ -64,11 +65,37 @@ public class SceneManager : MonoBehaviour
                 eventParser("dPoint",kvp);
             }
         }
+        
+        // Read npcPoint
+        jsonString = File.ReadAllText(jsonPath+"npcPoints.json");
+        jsonNode = JSONNode.Parse(jsonString);
+        // Read Files
+        if (jsonNode.Tag == JSONNodeType.Object)
+        {
+            foreach (KeyValuePair<string, JSONNode> kvp in (JSONObject)jsonNode)
+            {
+                eventParser("npcPoint",kvp);
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
         // Queue First Event
         QueueEventFront("dPoint",1);
 
         // Run Queue
         setupNextEvent();
+
+    }
+
+    public LinkedList<Event> eventQueue = new LinkedList<Event>();
+    void Start()
+    {
+        loadDayFiles();
     }
 
     public void QueueEventFront(string type, int id)
@@ -77,6 +104,9 @@ public class SceneManager : MonoBehaviour
         {
             case "dPoint":
                 eventQueue.AddFirst(dPoints.First(e => e.id == id));
+                break;
+            case "npcPoint":
+                eventQueue.AddFirst(npcPoints.First(e => e.id == id));
                 break;
             default:
                 throw new Exception("Failed");
@@ -89,7 +119,10 @@ public class SceneManager : MonoBehaviour
         switch (type)
         {
             case "dPoint":
-                eventQueue.AddFirst(dPoints.First(e => e.id == id));
+                eventQueue.AddLast(dPoints.First(e => e.id == id));
+                break;
+            case "npcPoint":
+                eventQueue.AddLast(npcPoints.First(e => e.id == id));
                 break;
             default:
                 throw new Exception("Failed");
@@ -101,6 +134,7 @@ public class SceneManager : MonoBehaviour
     {
         Event e = eventQueue.First();
         eventQueue.RemoveFirst();
+        Debug.Log("QUEUE SIZE:" + eventQueue.Count);
         setupEvent(e);
     }
 
@@ -120,7 +154,14 @@ public class SceneManager : MonoBehaviour
                 };
                 dayEvent.runEvent(objects);
                 break;
-
+            case "npcPoint":
+                objects = new object[]
+                {
+                    npcText,
+                    nextButton
+                };
+                dayEvent.runEvent(objects);
+                break;
         }
     }
 
@@ -131,6 +172,7 @@ public class SceneManager : MonoBehaviour
             case "dPoint":
                 int id = Int32.Parse(kvp.Key);
                 string shownText = kvp.Value["shownText"].Value;
+                string character = kvp.Value["character"].Value;
                 List<DialogueOptions> options = new List<DialogueOptions>();
 
                 foreach (JSONNode option in kvp.Value["options"].Children)
@@ -151,7 +193,13 @@ public class SceneManager : MonoBehaviour
                 }
 
                 // Add dPoint to List
-                dPoints.AddLast(new DialoguePoint(id, "dPoint", shownText, options));
+                dPoints.AddLast(new DialoguePoint(id, "dPoint", shownText, options,character));
+                break;
+            case "npcPoint":
+                int id2 = Int32.Parse(kvp.Key);
+                string shownText2 = kvp.Value["shownText"].Value;
+                string character2 = kvp.Value["character"].Value;
+                npcPoints.AddLast(new NPCPoint(id2, "npcPoint", shownText2, character2));
                 break;
             default:
                 Debug.Log("Failed to Parse: "+kvp.Key);
