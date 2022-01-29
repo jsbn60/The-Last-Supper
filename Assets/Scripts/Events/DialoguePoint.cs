@@ -10,27 +10,33 @@ using Object = System.Object;
 
 public class DialoguePoint : Event
 {
-    public string shownText;
-    public string character;
     public List<DialogueOptions> dialogueOptions;
     
     // Arg1 = TextObject to display text
     // Arg2 = DialogueButtons
     public override void runEvent(Object[] args)
     {
-        ((Text) args[0]).GetComponent<UITextTypeWriter>().showText(character+": "+shownText);
         // showtext
 
         Button[] buttons = new Button[4];
 
-        for (int i = 1; i <= 4; i++)
+        for (int i = 1; i <= 3; i++)
         {
-           buttons[i - 1] = ((DialogeButton) args[i]).GetComponent<Button>();
+            buttons[i - 1] = (Button) args[i];
         }
+
+        string[] answers = new string[dialogueOptions.Count];
 
         for (int i = 0; i < dialogueOptions.Count; i++)
         {
-            buttons[i].GetComponent<DialogeButton>().setResponseText(dialogueOptions[i].answer);
+            answers[i] = dialogueOptions[i].answer;
+        }
+
+        SceneManager.Instance.changeUI(SceneManager.UIModes.ChoiceMode);
+        SceneManager.Instance.displayChoices(answers);
+
+        for (int i = 0; i < dialogueOptions.Count; i++)
+        {
             var i1 = i;
             buttons[i].onClick.AddListener(() =>
             {
@@ -44,10 +50,8 @@ public class DialoguePoint : Event
         }
     }
 
-    public DialoguePoint(int id, string type, string shownText, List<DialogueOptions> dialogueOptions, string character) : base(type, id)
+    public DialoguePoint(int id, string type, List<DialogueOptions> dialogueOptions) : base(type, id)
     {
-        this.shownText = shownText;
         this.dialogueOptions = dialogueOptions;
-        this.character = character;
     }
 }

@@ -7,6 +7,7 @@ using Events;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.UI;
+using Util;
 using Object = System.Object;
 
 public class SceneManager : MonoBehaviour
@@ -28,29 +29,78 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            dialogBox.gameObject.SetActive(!dialogBox.gameObject.activeSelf);
-        }
-    }
-
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
     
-    [SerializeField] private DialogeButton[] dialogeButtons;
+    [SerializeField] private Button[] dialogeButtons;
 
     [SerializeField] private Text npcText;
 
-    [SerializeField] private Text playerAnswerText;
-
-    [SerializeField] private GameObject dialogBox;
+    //[SerializeField] private Text playerAnswerText;
 
     [SerializeField] private Button nextButton;
+
+    [SerializeField] private GameObject dialogueBox;
+
+    [SerializeField] private GameObject npcBox;
+    
     private string jsonPath = "Assets/DayFiles/DayTest/";
+
+    public enum UIModes
+    {
+        ChoiceMode,
+        NPCMode,
+        
+    }
+
+    public void changeUI(UIModes uiMode)
+    {
+        switch (uiMode)
+        {
+            case UIModes.ChoiceMode:
+                npcBox.SetActive(false);
+                dialogueBox.SetActive(true);
+                break;
+            case UIModes.NPCMode:
+                npcBox.SetActive(true);
+                dialogueBox.SetActive(false);
+                break;
+        }
+    }
+    public void displayChoices(string[] playerChoices)
+    {
+        if (playerChoices.Length >= 1)
+        {
+            dialogeButtons[0].gameObject.SetActive(true);
+            dialogeButtons[0].GetComponentInChildren<Text>().text = playerChoices[0];
+        }
+        else
+        {
+            dialogeButtons[0].gameObject.SetActive(false);
+        }
+
+        if (playerChoices.Length >= 2)
+        {
+            dialogeButtons[1].gameObject.SetActive(true);
+            dialogeButtons[1].GetComponentInChildren<Text>().text = playerChoices[1];
+        }
+        else
+        {
+            dialogeButtons[1].gameObject.SetActive(false);
+        }
+        
+        if (playerChoices.Length >= 3)
+        {
+            dialogeButtons[2].gameObject.SetActive(true);
+            dialogeButtons[2].GetComponentInChildren<Text>().text = playerChoices[2];
+        }
+        else
+        {
+            dialogeButtons[2].gameObject.SetActive(false);
+        }
+    }
 
     public void loadDayFiles()
     {
@@ -81,15 +131,12 @@ public class SceneManager : MonoBehaviour
         
         
         
-        
-        
-        
         // Queue First Event
         QueueEventFront("dPoint",1);
 
         // Run Queue
         setupNextEvent();
-
+        SoundManager.Instance.runBackgroundForDay(0);
     }
 
     public LinkedList<Event> eventQueue = new LinkedList<Event>();
@@ -150,7 +197,6 @@ public class SceneManager : MonoBehaviour
                     dialogeButtons[0],
                     dialogeButtons[1],
                     dialogeButtons[2],
-                    dialogeButtons[3]
                 };
                 dayEvent.runEvent(objects);
                 break;
@@ -171,8 +217,6 @@ public class SceneManager : MonoBehaviour
         {
             case "dPoint":
                 int id = Int32.Parse(kvp.Key);
-                string shownText = kvp.Value["shownText"].Value;
-                string character = kvp.Value["character"].Value;
                 List<DialogueOptions> options = new List<DialogueOptions>();
 
                 foreach (JSONNode option in kvp.Value["options"].Children)
@@ -193,7 +237,7 @@ public class SceneManager : MonoBehaviour
                 }
 
                 // Add dPoint to List
-                dPoints.AddLast(new DialoguePoint(id, "dPoint", shownText, options,character));
+                dPoints.AddLast(new DialoguePoint(id, "dPoint",  options));
                 break;
             case "npcPoint":
                 int id2 = Int32.Parse(kvp.Key);

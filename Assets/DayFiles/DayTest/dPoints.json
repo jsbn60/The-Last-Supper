@@ -1,10 +1,7 @@
 {
     "1":{
-        "shownText": "Good Morning, everyone!",
-        "character": "Peter",
         "options":{
             "A": {
-                "character": "Peter",
                 "response": "Back to you!",
                 "followEvents" : {
                     "npcPoint": "1",
@@ -12,7 +9,6 @@
                 }
             },
             "B": {
-                "character": "Peter",
                 "response": "Don't talk to me!",
                 "followEvents" : {
                     "dPoint" : "3"
@@ -21,8 +17,6 @@
         }
     },
     "2": {
-        "shownText": "You want Coffee?",
-        "character": "Peter",
         "options":{
             "A":{
                 "response" : "Yeah, Sure!",
@@ -35,8 +29,6 @@
         }
     },
     "3": {
-        "character": "Peter",
-        "shownText": "Why so rude?",
         "options":{
             "A":{
                 "response" : "I dont know.",

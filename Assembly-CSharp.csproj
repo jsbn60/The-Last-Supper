@@ -56,7 +56,6 @@
      <Compile Include="Assets\Scripts\Events\DialogueOptions.cs" />
      <Compile Include="Assets\Scripts\SceneManager.cs" />
      <Compile Include="Assets\Scripts\Util\Pair.cs" />
-     <Compile Include="Assets\Scripts\DialogeButton.cs" />
      <Compile Include="Assets\Scripts\Events\DialoguePoint.cs" />
      <Compile Include="Assets\Scripts\SimpleJSON\SimpleJSON.cs" />
      <Compile Include="Assets\Scripts\Events\Event.cs" />

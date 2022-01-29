@@ -15,6 +15,7 @@ namespace Events
         // Arg2 = DialogueButtons
         public override void runEvent(Object[] args)
         {
+            SceneManager.Instance.changeUI(SceneManager.UIModes.NPCMode);
             ((Text) args[0]).GetComponent<UITextTypeWriter>().showText(character+": "+shownText);
             // showtext
 

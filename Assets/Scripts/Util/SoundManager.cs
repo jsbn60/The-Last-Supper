@@ -4,6 +4,8 @@ namespace Util
 {
     public class SoundManager : MonoBehaviour
     {
+        [SerializeField] private AudioSource backgroundAudioSource;
+        [SerializeField] private AudioClip[] backgroundMusicForDays;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip buttonClick;
         [SerializeField] private AudioClip textReadout;
@@ -13,6 +15,7 @@ namespace Util
             ButtonClick,
             TextReadout
         }
+        
 
         private static SoundManager _instance;
 
@@ -27,6 +30,12 @@ namespace Util
 
                 return _instance;
             }
+        }
+
+        public void runBackgroundForDay(int day)
+        {
+            backgroundAudioSource.clip = backgroundMusicForDays[day];
+            backgroundAudioSource.Play();
         }
 
         public void playsoundEffect(SoundClip soundClip)

@@ -1,10 +1,18 @@
 {
     "1":{
         "shownText": "Hey, let me Talk!",
-        "character": "Peter"
+        "character": "Peter",
+        "followEvents" : {
+            "npcPoint": "1",
+            "dPoint" : "2"
+        }
     },
     "2": {
         "shownText": "Let's gooo!",
-        "character": "Michael"
+        "character": "Michael",
+        "followEvents" : {
+            "npcPoint": "1",
+            "dPoint" : "2"
+        }
     }
 }
