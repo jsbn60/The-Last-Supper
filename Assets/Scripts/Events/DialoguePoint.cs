@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Object = System.Object;
 
-[Serializable]
 public class DialoguePoint : Event
 {
     public string shownText;
@@ -17,9 +16,8 @@ public class DialoguePoint : Event
     // Arg2 = DialogueButtons
     public override void runEvent(Object[] args)
     {
-        ((Text) args[0]).text = shownText;
+        ((Text) args[0]).GetComponent<UITextTypeWriter>().showText(shownText);
         // showtext
-        // Link optionEvents to Buttons
 
         Button[] buttons = new Button[4];
 
@@ -35,16 +33,16 @@ public class DialoguePoint : Event
             var i1 = i;
             buttons[i].onClick.AddListener(() =>
             {
-                foreach (Event optionEvent in dialogueOptions[i1].optionEvents.Reverse())
+                foreach (Pair<string, int> pair in dialogueOptions[i1].optionEvents.Reverse())
                 {
-                    SceneManager.Instance.dayEvents.AddFirst(optionEvent);
-                    SceneManager.Instance.setupNextEvent();
+                    SceneManager.Instance.QueueEventFront(pair.First, pair.Second);
                 }
+                SceneManager.Instance.setupNextEvent();
             });
         }
     }
 
-    public DialoguePoint(string type, string shownText, List<DialogueOptions> dialogueOptions) : base(type)
+    public DialoguePoint(int id, string type, string shownText, List<DialogueOptions> dialogueOptions) : base(type, id)
     {
         this.shownText = shownText;
         this.dialogueOptions = dialogueOptions;

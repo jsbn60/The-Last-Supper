@@ -1,0 +1,45 @@
+{
+    "1":{
+        "shownText": "Good Morning, everyone!", 
+        "options":{
+            "A": {
+                "response": "Back to you!",
+                "followEvents" : {
+                    "dPoint" : "2"
+                }
+            },
+            "B": {
+                "response": "Don't talk to me!",
+                "followEvents" : {
+                    "dPoint" : "3"
+                }
+            }
+        }
+    },
+    "2": {
+        "shownText": "You want Coffee?",
+        "options":{
+            "A":{
+                "response" : "Yeah, Sure!",
+                "followPoints" : {}
+            },
+            "B":{
+                "response":"Nah, I'm Good",
+                "followPoints:" : {}
+            }
+        }
+    },
+    "3": {
+        "shownText": "Why so rude?",
+        "options":{
+            "A":{
+                "response" : "I dont know.",
+                "followPoints" : {}
+            },
+            "B":{
+                "response":"Shut up...",
+                "followPoints:" : {}
+            }
+        }
+    }
+}

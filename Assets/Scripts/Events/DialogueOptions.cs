@@ -3,9 +3,8 @@
 public struct DialogueOptions
 {
     public string answer;
-    public LinkedList<Event> optionEvents;
-
-    public DialogueOptions(string answer,  LinkedList<Event> optionEvents)
+    public LinkedList<Pair<string,int>> optionEvents;
+    public DialogueOptions(string answer, LinkedList<Pair<string,int>> optionEvents)
     {
         this.answer = answer;
         this.optionEvents = optionEvents;
