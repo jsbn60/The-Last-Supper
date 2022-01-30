@@ -29,11 +29,8 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-    
+    [SerializeField] public int day;
+
     [SerializeField] private Button[] dialogeButtons;
 
     [SerializeField] private Text npcText;
@@ -45,8 +42,9 @@ public class SceneManager : MonoBehaviour
     [SerializeField] private GameObject dialogueBox;
 
     [SerializeField] private GameObject npcBox;
+
+    private string jsonPath;
     
-    private string jsonPath = "Assets/DayFiles/DayTest/";
 
     public enum UIModes
     {
@@ -132,23 +130,52 @@ public class SceneManager : MonoBehaviour
         
         
         // Queue First Event
-        QueueEventFront("dPoint",1);
+        if (eventTypeToStartWith == "dPoint")
+        {
+            QueueEventFront("dPoint",1);   
+        }
+        else if (eventTypeToStartWith == "npcPoint")
+        {
+            QueueEventFront("npcPoint",1);  
+        }
 
-        // Run Queue
-        setupNextEvent();
-        SoundManager.Instance.runBackgroundForDay(0);
+        currentTime = delayBeforeFirstEvent;
     }
+
+    [SerializeField] private string eventTypeToStartWith;
 
     public LinkedList<Event> eventQueue = new LinkedList<Event>();
     void Start()
     {
+        jsonPath = "Assets/DayFiles/Day" + day + "/";
         loadDayFiles();
+    }
+
+    [SerializeField] private float delayBeforeFirstEvent;
+
+    private float currentTime;
+    public void Update()
+    {
+        if (currentTime > 0)
+        {
+            currentTime -= Time.deltaTime;
+
+            if (currentTime <= 0)
+            {
+                // Run Queue
+                setupNextEvent();
+            }
+        }
     }
 
     public void QueueEventFront(string type, int id)
     {
+        Debug.Log("EventQueued: " + type);
         switch (type)
         {
+            case "endDay":
+                eventQueue.AddFirst(new EndDay("endDay",0));
+                break;
             case "dPoint":
                 eventQueue.AddFirst(dPoints.First(e => e.id == id));
                 break;
@@ -187,9 +214,13 @@ public class SceneManager : MonoBehaviour
 
     private void setupEvent(Event dayEvent)
     {
+        Debug.Log("Setup Event Triggered:");
         Object[] objects;
         switch (dayEvent.type)
         {
+            case "endDay":
+                dayEvent.runEvent(null);
+                break;
             case "dPoint":
                 objects = new object[]
                 {
@@ -243,7 +274,17 @@ public class SceneManager : MonoBehaviour
                 int id2 = Int32.Parse(kvp.Key);
                 string shownText2 = kvp.Value["shownText"].Value;
                 string character2 = kvp.Value["character"].Value;
-                npcPoints.AddLast(new NPCPoint(id2, "npcPoint", shownText2, character2));
+                
+                LinkedList<Pair<string, int>> followEvents2 = new LinkedList<Pair<string, int>>();
+                JSONNode jsonEvents2 = kvp.Value["followEvents"];
+                if (jsonEvents2.Tag == JSONNodeType.Object)
+                {
+                    foreach (KeyValuePair<string, JSONNode> kvpOption in (JSONObject)jsonEvents2)
+                    {
+                        followEvents2.AddLast(new Pair<string, int>(kvpOption.Key, kvpOption.Value));
+                    }
+                }
+                npcPoints.AddLast(new NPCPoint(id2, "npcPoint", shownText2, character2, followEvents2));
                 break;
             default:
                 Debug.Log("Failed to Parse: "+kvp.Key);

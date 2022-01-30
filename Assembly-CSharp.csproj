@@ -53,10 +53,16 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\SimpleJSON\SimpleJSONDotNetTypes.cs" />
+     <Compile Include="Assets\TextFade.cs" />
      <Compile Include="Assets\Scripts\Events\DialogueOptions.cs" />
      <Compile Include="Assets\Scripts\SceneManager.cs" />
+     <Compile Include="Assets\Scripts\TVUIManager.cs" />
+     <Compile Include="Assets\ImageFade.cs" />
+     <Compile Include="Assets\DayManager.cs" />
+     <Compile Include="Assets\DayButton.cs" />
      <Compile Include="Assets\Scripts\Util\Pair.cs" />
      <Compile Include="Assets\Scripts\Events\DialoguePoint.cs" />
+     <Compile Include="Assets\Scripts\Events\EndDay.cs" />
      <Compile Include="Assets\Scripts\SimpleJSON\SimpleJSON.cs" />
      <Compile Include="Assets\Scripts\Events\Event.cs" />
      <Compile Include="Assets\Scripts\SimpleJSON\SimpleJSONUnity.cs" />

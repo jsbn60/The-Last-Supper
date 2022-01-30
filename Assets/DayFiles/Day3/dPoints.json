@@ -1,0 +1,24 @@
+{
+    "1": {
+        "options": {
+            "A": {
+                "response": "Go to next Day!",
+                "followEvents": {
+                    "endDay" : "true"
+                }
+            },
+            "B": {
+                "response": "Go to next Day!",
+                "followEvents": {
+                    "endDay" : "true"
+                }
+            },
+            "C": {
+                "response": "Go to next Day!",
+                "followEvents": {
+                    "endDay" : "true"
+                }
+            }
+        }
+    }
+}

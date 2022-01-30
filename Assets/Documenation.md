@@ -5,8 +5,6 @@
 - dPoint (DialoguePoint)
 ````
     "1":{
-        "character": "Which character
-        "shownText": "Good Morning, everyone!", 
         "options":{
             "A": {
                 "response": "Back to you!",
