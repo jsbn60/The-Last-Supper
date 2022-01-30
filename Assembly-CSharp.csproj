@@ -70,6 +70,10 @@
      <Compile Include="Assets\Scripts\SimpleJSON\SimpleJSONBinary.cs" />
      <Compile Include="Assets\Scripts\Util\SoundManager.cs" />
      <Compile Include="Assets\Scripts\Events\NPCPoint.cs" />
+     <Compile Include="Assets\TVButton.cs" />
+     <None Include="Assets\Fonts\Signika_Negative\OFL.txt" />
+     <None Include="Assets\Fonts\Signika_Negative\README.txt" />
+     <None Include="Assets\Fonts\Libre_Baskerville\OFL.txt" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.26f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

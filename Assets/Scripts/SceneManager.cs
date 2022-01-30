@@ -43,6 +43,10 @@ public class SceneManager : MonoBehaviour
 
     [SerializeField] private GameObject npcBox;
 
+    [SerializeField] private Sprite[] npcSprites;
+
+    [SerializeField] private Image npcImage;
+
     private string jsonPath;
     
 
@@ -64,6 +68,22 @@ public class SceneManager : MonoBehaviour
             case UIModes.NPCMode:
                 npcBox.SetActive(true);
                 dialogueBox.SetActive(false);
+                break;
+        }
+    }
+
+    public void changeNPCImage(string characterName)
+    {
+        switch (characterName)
+        {
+            case "Vater":
+                npcImage.sprite = npcSprites[0];
+                break;
+            case "Mama":
+                npcImage.sprite = npcSprites[1];
+                break;
+            case "Isaac":
+                npcImage.sprite = npcSprites[2];
                 break;
         }
     }
@@ -148,6 +168,7 @@ public class SceneManager : MonoBehaviour
     void Start()
     {
         jsonPath = "Assets/DayFiles/Day" + day + "/";
+        SoundManager.Instance.runBackgroundForDay(day-1);
         loadDayFiles();
     }
 

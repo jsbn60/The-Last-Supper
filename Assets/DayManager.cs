@@ -18,8 +18,10 @@ public class DayManager : MonoBehaviour
 
     [SerializeField] private DayButton[] dayButtons;
 
+    [SerializeField] private Canvas menuCanvas;
     public void toggleAllDayButtons(bool turnOn)
     {
+        menuCanvas.sortingOrder = 0;
         foreach (DayButton dayButton in dayButtons)
         {
             dayButton.GetComponent<Button>().interactable = turnOn;
@@ -60,6 +62,7 @@ public class DayManager : MonoBehaviour
     public void runNextDay(int day)
     {
         dayToload = day;
+        SoundManager.Instance.runBackgroundForDay(-1);
         TVUI.toggleTVOverlay(false);
         TVUI.GetComponentInChildren<UITextTypeWriter>().showText(dayNews[day-1]);
         currentTime = waitTime;
@@ -74,9 +77,15 @@ public class DayManager : MonoBehaviour
 
             if (currentTime <= 0)
             {
-                loadNextDay(dayToload);
+                //loadNextDay(dayToload);
             }
         } 
+    }
+
+    public void onTVNextClicked()
+    {
+        Debug.Log("IMPLIED");
+        loadNextDay(dayToload);
     }
 
     private void loadNextDay(int day)
@@ -84,6 +93,5 @@ public class DayManager : MonoBehaviour
         TVUI.toggleTVOverlay(true);
         fadingBackground.runFade(2,true);
         UnityEngine.SceneManagement.SceneManager.LoadScene(day);
-        SoundManager.Instance.runBackgroundForDay(day-1);
     }
 }

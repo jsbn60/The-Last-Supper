@@ -9,6 +9,7 @@ namespace DefaultNamespace
         [SerializeField] private Image tvImage;
         [SerializeField] private Image newsBackground;
         [SerializeField] private Text newsText;
+        [SerializeField] private Image nextButton;
 
         public void toggleTVOverlay(bool fadeAway)
         {
@@ -18,6 +19,7 @@ namespace DefaultNamespace
                 tvImage.GetComponent<ImageFade>().runFade(2, true);   
                 newsBackground.GetComponent<ImageFade>().runFade(2, true);
                 newsText.GetComponent<TextFade>().runFade(2,true);
+                nextButton.GetComponent<ImageFade>().runFade(2, true);
             }
             else
             {
@@ -25,6 +27,7 @@ namespace DefaultNamespace
                 tvImage.GetComponent<ImageFade>().runFade(3, false);   
                 newsBackground.GetComponent<ImageFade>().runFade(3, false);
                 newsText.GetComponent<TextFade>().runFade(3,false);
+                nextButton.GetComponent<ImageFade>().runFade(3, false);
             }
         }
     }

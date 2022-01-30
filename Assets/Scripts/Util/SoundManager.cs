@@ -9,6 +9,7 @@ namespace Util
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip buttonClick;
         [SerializeField] private AudioClip textReadout;
+        [SerializeField] private AudioClip newsSound;
 
         public enum SoundClip
         {
@@ -34,7 +35,15 @@ namespace Util
 
         public void runBackgroundForDay(int day)
         {
-            backgroundAudioSource.clip = backgroundMusicForDays[day];
+            if (day == -1)
+            {
+                backgroundAudioSource.clip = newsSound;
+                Debug.Log("TEST");
+            }
+            else
+            {
+                backgroundAudioSource.clip = backgroundMusicForDays[day];   
+            }
             backgroundAudioSource.Play();
         }
 
